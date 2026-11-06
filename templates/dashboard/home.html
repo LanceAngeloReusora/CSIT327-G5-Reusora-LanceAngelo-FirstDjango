@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | CampusConnect{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4">Welcome, {{ user.first_name|default:user.username }}!</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card shadow-sm h-100 text-center">
+            <div class="card-body py-4">
+                <div class="fs-3 fw-bold">{{ user.get_role_display }}</div>
+                <div class="text-muted">Role</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card shadow-sm h-100 text-center">
+            <div class="card-body py-4">
+                <div class="fs-3 fw-bold">{{ user.course|default:"Not set" }}</div>
+                <div class="text-muted">Course</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card shadow-sm h-100 text-center">
+            <div class="card-body py-4">
+                <div class="fs-3 fw-bold">{{ member_count }}</div>
+                <div class="text-muted">Members</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p class="text-muted">Last login: {{ user.last_login|date:"M d, Y" }}</p>
+
+<div class="d-flex flex-wrap gap-2">
+    <a href="{% url 'profile' %}" class="btn btn-primary">Edit profile</a>
+    {% if is_admin %}
+    <a href="{% url 'admin_panel' %}" class="btn btn-outline-dark">Open admin panel</a>
+    {% endif %}
+</div>
+{% endblock %}
